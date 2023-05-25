@@ -14,7 +14,7 @@ public class Ex01 {
 		System.out.println(mensagem);
 		Scanner ler = new Scanner(System.in);
 		
-		int entradaUsuario
+		//int entradaUsuario
 		
 		return mensagem;		
 	}
