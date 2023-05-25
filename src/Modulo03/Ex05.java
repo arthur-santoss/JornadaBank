@@ -15,13 +15,14 @@ public class Ex05 {
 		
 		//imprimir
 		
-		for (int linha = 0; linha < matriz.length; linha++) {
-			int somaColuna = 0;
-			for (int coluna = 0; coluna < matriz[0].length; coluna++) {
-				System.out.print(matriz[linha][coluna] + " ");
-				somaColuna += matriz[coluna][coluna];
+		for (int coluna = 0; coluna < matriz[0].length; coluna++) {
+			double somaColuna = 0.0;
+			
+			for (int linha = 0; linha < matriz.length; linha++) {
+				System.out.print(matriz[coluna][linha] + " | ");
+				somaColuna += matriz[linha][coluna];
 			}
-			System.out.println("Soma da coluna: " + somaColuna);
+			System.out.println("Soma da coluna " + coluna + ": "+ somaColuna);
 		}
 		
 		
