@@ -1,5 +1,6 @@
 package ProjetoFinal;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class Main {
 		Scanner ler = new Scanner(System.in);
 		
 		int opcao = -1;
-		String[][] matrizUsuarios = new String [4][5];
+		String[][] matrizUsuarios = new String [4][6];
 		
 		
 		do {
@@ -27,6 +28,13 @@ public class Main {
 			case 1:
 				adicionarUsuario(matrizUsuarios);
 				break;
+				
+			case 2:
+				System.out.println("Digite um valor para depositar: ");
+				double deposito = 0.0;
+				deposito = ler.nextDouble();
+				fazerDeposito(deposito, matrizUsuarios);
+				break;
 			
 			case 5:
 				mostrarContasCadastradas(matrizUsuarios);
@@ -36,17 +44,33 @@ public class Main {
 				break;
 			}
 			
-		} while (opcao != 0);	
+		} while (opcao != 0);
+		System.out.println("Programa encerrado!");
 		
 		ler.close();
 	}
 
-	
+	private static void fazerDeposito(double deposito, String [][]matrizUsuarios) {
+		String valorDeposito = String.valueOf(deposito);
+		matrizUsuarios[verificaSeExiste(matrizUsuarios)][5] = valorDeposito;
+		
+	}
+
+	//verifica se a conta existe de acordo se a linha estiver preenchida
+	private static int verificaSeExiste(String [][]matrizUsuarios) {
+		for (int i = 0; i < matrizUsuarios.length; i++) {//linha
+			if (matrizUsuarios[i][0] != null) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 
 	private static void mostrarContasCadastradas(String[][] matrizUsuarios) {
 		// imprimir matriz
 				System.out.println("\nDados da Matriz:\n"
-						+ "nome / CPF / E-mail / Senha / Conta ");
+						+ "nome / CPF / E-mail / Senha / Conta / Saldo");
 				for (int i = 0; i < matrizUsuarios.length; i++) {
 					for (int j = 0; j < matrizUsuarios[i].length; j++) {
 						System.out.print(matrizUsuarios[i][j] + " | ");
@@ -61,7 +85,7 @@ public class Main {
 		Scanner ler = new Scanner(System.in);
 		Random random = new Random();
 		
-		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000));
+		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000)); //gera um numero de 4 dígitos para conta
 		int posicao = encontrarPosicaoVazia(matrizUsuarios);
 		
 		
@@ -78,7 +102,7 @@ public class Main {
 		System.out.print("digite seu senha: ");
 		matrizUsuarios[posicao][3] = ler.next();
 		
-		//adiciona numero da contaz
+		//adiciona numero da conta
 		matrizUsuarios[posicao][4] = numeroAleatorio;
 		
 	}
