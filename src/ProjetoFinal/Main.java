@@ -31,8 +31,7 @@ public class Main {
 				
 			case 2:
 				System.out.println("Digite um valor para depositar: ");
-				double deposito = 0.0;
-				deposito = ler.nextDouble();
+				double deposito = ler.nextDouble();
 				fazerDeposito(deposito, matrizUsuarios);
 				break;
 			
@@ -50,14 +49,27 @@ public class Main {
 		ler.close();
 	}
 
-	private static void fazerDeposito(double deposito, String [][]matrizUsuarios) {
-		String valorDeposito = String.valueOf(deposito);
-		matrizUsuarios[verificaSeExiste(matrizUsuarios)][5] = valorDeposito;
+	private static void fazerDeposito(double deposito, String[][] matrizUsuarios) {
+		int linha = verificaLinhaSeExiste(matrizUsuarios);
+		int coluna = 5;//coluna do saldo
 		
+		    if (matrizUsuarios[linha][coluna] == null) {
+		        double saldoAtual = 0;
+		        double novoSaldo = saldoAtual + deposito;
+		        matrizUsuarios[linha][coluna] = String.valueOf(novoSaldo);
+		        
+		    } else if(matrizUsuarios[linha][coluna] != null){
+		    	double saldoAtual = Double.parseDouble(matrizUsuarios[linha][coluna]);
+				double novoSaldo = saldoAtual + deposito;
+				matrizUsuarios[linha][coluna] = String.valueOf(novoSaldo);
+		    }else {
+		    	System.out.println("Erro: o saldo antigo é nulo.");
+			}
+	    
 	}
 
 	//verifica se a conta existe de acordo se a linha estiver preenchida
-	private static int verificaSeExiste(String [][]matrizUsuarios) {
+	private static int verificaLinhaSeExiste(String [][]matrizUsuarios) {
 		for (int i = 0; i < matrizUsuarios.length; i++) {//linha
 			if (matrizUsuarios[i][0] != null) {
 				return i;
