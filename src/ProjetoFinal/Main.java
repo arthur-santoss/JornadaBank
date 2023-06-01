@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		Scanner ler = new Scanner(System.in);
-		
+		int contador = 0;
 		int opcao = -1;
 		String[][] matrizUsuarios = new String [4][6];
 		
@@ -30,9 +30,7 @@ public class Main {
 				break;
 				
 			case 2:
-				System.out.println("Digite um valor para depositar: ");
-				double deposito = ler.nextDouble();
-				fazerDeposito(deposito, matrizUsuarios);
+				fazerDeposito(matrizUsuarios);
 				break;
 			
 			case 5:
@@ -49,23 +47,52 @@ public class Main {
 		ler.close();
 	}
 
-	private static void fazerDeposito(double deposito, String[][] matrizUsuarios) {
+	private static void fazerDeposito(String[][] matrizUsuarios) {
+		Scanner ler = new Scanner(System.in);
 		int linha = verificaLinhaSeExiste(matrizUsuarios);
 		int coluna = 5;//coluna do saldo
 		
-		    if (matrizUsuarios[linha][coluna] == null) {
-		        double saldoAtual = 0;
-		        double novoSaldo = saldoAtual + deposito;
-		        matrizUsuarios[linha][coluna] = String.valueOf(novoSaldo);
-		        
-		    } else if(matrizUsuarios[linha][coluna] != null){
-		    	double saldoAtual = Double.parseDouble(matrizUsuarios[linha][coluna]);
-				double novoSaldo = saldoAtual + deposito;
-				matrizUsuarios[linha][coluna] = String.valueOf(novoSaldo);
-		    }else {
-		    	System.out.println("Erro: o saldo antigo é nulo.");
+		
+		System.out.println("\nEscolha: \n"
+				+ "1) logar\n"
+				+ "2) Não tenho conta -> criar conta\n");
+		int op = ler.nextInt();
+		
+		switch (op) {
+		case 1:
+			ler.nextLine();
+			System.out.print("informe a conta para deposito:\n");
+			String conta = ler.nextLine();
+			System.out.print("informe a senha da conta:\n");
+			String senha = ler.nextLine();
+			
+			verificarUsuario(conta, senha, matrizUsuarios);
+			
+			
+			break;
+			
+		case 2:
+			adicionarUsuario(matrizUsuarios);
+			break;
+			
+			
+		default:
+			break;
+		}
+		
+	}
+	
+
+	private static void verificarUsuario(String conta, String senha, String[][] matrizUsuarios) {
+		for (int i = 0; i < matrizUsuarios.length; i++) {
+			for (int j = 0; j < matrizUsuarios.length; j++) {
+				if (conta == matrizUsuarios[i][j] && senha == matrizUsuarios[i][j]) {
+					System.out.println("Usuário existente");
+				}
 			}
-	    
+		}
+		System.out.println("Usuário não encontrado!");
+		
 	}
 
 	//verifica se a conta existe de acordo se a linha estiver preenchida
@@ -100,8 +127,6 @@ public class Main {
 		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000)); //gera um numero de 4 dígitos para conta
 		int posicao = encontrarPosicaoVazia(matrizUsuarios);
 		
-		
-
 		System.out.print("\ndigite seu nome: ");
 		matrizUsuarios[posicao][0] = ler.next();
 		
@@ -111,11 +136,19 @@ public class Main {
 		System.out.print("digite seu email: ");
 		matrizUsuarios[posicao][2] = ler.next();
 		
-		System.out.print("digite seu senha: ");
+		System.out.print("digite sua senha: ");
 		matrizUsuarios[posicao][3] = ler.next();
 		
 		//adiciona numero da conta
 		matrizUsuarios[posicao][4] = numeroAleatorio;
+		
+		System.out.println("-----------usuário-----------\n"+		
+				"nome: " + matrizUsuarios[posicao][0]+ " | " +
+				"cpf: " + matrizUsuarios[posicao][1]+ " | " +
+				"email: " + matrizUsuarios[posicao][2]+ " | " +
+				"senha: " + matrizUsuarios[posicao][3]+ " | " +
+				"conta: " + matrizUsuarios[posicao][4]+ " | " 
+				+ "\n-----------criado com sucesso!-----------");
 		
 	}
 
