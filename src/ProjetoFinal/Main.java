@@ -68,7 +68,7 @@ public class Main {
 		System.out.print("-----------FAZER DEPÓSITO-----------\n"
 				+ "1) logar\n"
 				+ "2) Não tenho conta -> criar conta"
-				+ "->");
+				+ "\n->");
 		int op = ler.nextInt();
 		
 		switch (op) {
@@ -92,7 +92,7 @@ public class Main {
 		}
 	}
 	
-	//-------------------MÉTODOS DE AUXÍLIARES DE OUTROS MÉTODOS-------------------
+	//-------------------MÉTODOS AUXÍLIARES DE OUTROS MÉTODOS-------------------
 	private static void depositar(int i, String[][] matrizUsuarios ) {
 		Scanner ler = new Scanner(System.in);
 		
@@ -100,7 +100,15 @@ public class Main {
 		
 		System.out.print("Informe o valor para deposito: R$ ");
 		double deposito = ler.nextDouble();
-		matrizUsuarios[i][5] += String.valueOf(deposito);
+		
+		
+		if (matrizUsuarios[i][5] != null) {
+			double valor = Double.parseDouble(matrizUsuarios[i][5]);
+			double incrementarValor = valor + deposito;
+			matrizUsuarios[i][5] = String.valueOf(incrementarValor);
+		}else {
+			matrizUsuarios[i][5] = String.valueOf(deposito);
+		}
 		
 		System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
 		System.out.println("------------------------------------");
