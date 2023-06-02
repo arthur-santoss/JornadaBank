@@ -52,7 +52,6 @@ public class Main {
 		int linha = verificaLinhaSeExiste(matrizUsuarios);
 		int coluna = 5;//coluna do saldo
 		
-		
 		System.out.println("\nEscolha: \n"
 				+ "1) logar\n"
 				+ "2) Não tenho conta -> criar conta\n");
@@ -67,32 +66,39 @@ public class Main {
 			String senha = ler.nextLine();
 			
 			verificarUsuario(conta, senha, matrizUsuarios);
-			
-			
 			break;
 			
 		case 2:
 			adicionarUsuario(matrizUsuarios);
 			break;
 			
-			
 		default:
 			break;
 		}
-		
 	}
-	
 
 	private static void verificarUsuario(String conta, String senha, String[][] matrizUsuarios) {
+		Scanner ler = new Scanner(System.in);
 		for (int i = 0; i < matrizUsuarios.length; i++) {
-			for (int j = 0; j < matrizUsuarios.length; j++) {
-				if (conta == matrizUsuarios[i][j] && senha == matrizUsuarios[i][j]) {
-					System.out.println("Usuário existente");
-				}
+			if (conta.equals(matrizUsuarios[i][4]) && senha.equals(matrizUsuarios[i][3])) {
+				System.out.println("Usuário existente");
+				depositar(i, matrizUsuarios);
+				
+				break;
+			}else {
+				System.out.println("Procurando...");
 			}
+			
 		}
-		System.out.println("Usuário não encontrado!");
 		
+		
+	}
+
+	private static void depositar(int i, String[][] matrizUsuarios ) {
+		Scanner ler = new Scanner(System.in);
+		System.out.println("Informe o valor para deposito");
+		double deposito = ler.nextDouble();
+		matrizUsuarios[i][5] += String.valueOf(deposito);
 	}
 
 	//verifica se a conta existe de acordo se a linha estiver preenchida
@@ -124,7 +130,7 @@ public class Main {
 		Scanner ler = new Scanner(System.in);
 		Random random = new Random();
 		
-		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000)); //gera um numero de 4 dígitos para conta
+		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000) ); //gera um numero de 4 dígitos para conta
 		int posicao = encontrarPosicaoVazia(matrizUsuarios);
 		
 		System.out.print("\ndigite seu nome: ");
