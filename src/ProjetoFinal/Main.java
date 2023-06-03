@@ -195,15 +195,6 @@ public class Main {
 		System.out.println("Saldo atual " + matrizUsuarios[i][5]);
 		
 	}
-	//verifica se a conta existe de acordo se a linha estiver preenchida
-	private static int verificaLinhaSeExiste(String [][]matrizUsuarios) {
-		for (int i = 0; i < matrizUsuarios.length; i++) {//linha
-			if (matrizUsuarios[i][0] != null) {
-				return i;
-			}
-		}
-		return -1;
-	}
 	
 	public static int encontrarPosicaoVazia(String[][] matrizUsuarios) {
 		for (int i = 0; i < matrizUsuarios.length; i++) {
