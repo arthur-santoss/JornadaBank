@@ -9,6 +9,7 @@ public class Main {
 		Scanner ler = new Scanner(System.in);
 		int contador = 0;
 		int opcao = -1;
+		boolean precisaSenha = false;
 		String[][] matrizUsuarios = new String [4][6];
 		
 		
@@ -30,11 +31,14 @@ public class Main {
 				break;
 				
 			case 2:
-				fazerDeposito(matrizUsuarios);
+				fazerDeposito(matrizUsuarios, precisaSenha);
 				break;
 				
 			case 3:
-				fazerTransferencia(matrizUsuarios);
+				fazerSaque(matrizUsuarios, precisaSenha);
+				break;
+			case 4:
+//				fazerTransferencia(matrizUsuarios);
 				break;
 			
 			case 5:
@@ -49,20 +53,35 @@ public class Main {
 		System.out.println("Programa encerrado!");
 		
 	}
-	//-------------------MÉTODOS DE TRANSFERÊNCIA DE SALDO ENTRE USUÁRIOS-------------------
-	private static void fazerTransferencia(String[][] matrizUsuarios) {
+	private static void fazerSaque(String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
-		System.out.println("informe a sua conta:");
+		
+		precisaSenha = true;
+		
+		System.out.println("informe sua conta: ");
 		String conta = ler.nextLine();
 		System.out.print("informe a senha da sua conta:");
 		String senha = ler.nextLine();
 		
-		verificarUsuario(conta, senha, matrizUsuarios);
+		verificarUsuario(conta, matrizUsuarios, precisaSenha);
+		
+		
 		
 	}
+	//-------------------MÉTODOS DE TRANSFERÊNCIA DE SALDO ENTRE USUÁRIOS-------------------
+//	private static void fazerTransferencia(String[][] matrizUsuarios) {
+//		Scanner ler = new Scanner(System.in);
+//		System.out.println("informe a sua conta:");
+//		String conta = ler.nextLine();
+//		System.out.print("informe a senha da sua conta:");
+//		String senha = ler.nextLine();
+//		
+//		verificarUsuario(conta, matrizUsuarios);
+//		
+//	}
 
 	//-------------------MÉTODOS DE DEPÓSITO-------------------
-	private static void fazerDeposito(String[][] matrizUsuarios) {
+	private static void fazerDeposito(String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
 		
 		System.out.print("-----------FAZER DEPÓSITO-----------\n"
@@ -77,10 +96,8 @@ public class Main {
 			System.out.print("\n-----------LOGIN-----------"
 					+ "\ninforme a conta para deposito:\n");
 			String conta = ler.nextLine();
-			System.out.print("informe a senha da conta:\n");
-			String senha = ler.nextLine();
 			
-			verificarUsuario(conta, senha, matrizUsuarios);
+			verificarUsuario(conta, matrizUsuarios, precisaSenha);
 			break;
 			
 		case 2:
@@ -101,32 +118,42 @@ public class Main {
 		System.out.print("Informe o valor para deposito: R$ ");
 		double deposito = ler.nextDouble();
 		
-		
-		if (matrizUsuarios[i][5] != null) {
-			double valor = Double.parseDouble(matrizUsuarios[i][5]);
-			double incrementarValor = valor + deposito;
-			matrizUsuarios[i][5] = String.valueOf(incrementarValor);
-		}else {
-			matrizUsuarios[i][5] = String.valueOf(deposito);
+		if (deposito < 0) {
+			System.out.println("Valor inválido!");
+		} else {
+			if (matrizUsuarios[i][5] != null) {
+				double valor = Double.parseDouble(matrizUsuarios[i][5]);
+				double incrementarValor = valor + deposito;
+				matrizUsuarios[i][5] = String.valueOf(incrementarValor);
+				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
+			}else {
+				matrizUsuarios[i][5] = String.valueOf(deposito);
+				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
+			}
 		}
 		
-		System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
+		mostrarSaldo(matrizUsuarios, i);
 		System.out.println("------------------------------------");
 		
 	}
 
 	
 	//verifica na matriz se os dados de conta e senha existem e coincidem
-	private static void verificarUsuario(String conta, String senha, String[][] matrizUsuarios) {
+	private static void verificarUsuario(String conta, String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
 		for (int i = 0; i < matrizUsuarios.length; i++) {
-			if (conta.equals(matrizUsuarios[i][4]) && senha.equals(matrizUsuarios[i][3])) {
+			if (conta.equals(matrizUsuarios[i][4])) {
 				System.out.println("\nUsuário encontrado!\n");
-				depositar(i, matrizUsuarios);				
+				if (precisaSenha == false) {
+					depositar(i, matrizUsuarios);
+				} else if (precisaSenha == true) {
+					sacar(i, matrizUsuarios);
+				}{
+					
+				}
 				break;
 			}
-			else if (!conta.equals(matrizUsuarios[i][4]) && senha.equals(matrizUsuarios[i][3]) || 
-					conta.equals(matrizUsuarios[i][4]) && !senha.equals(matrizUsuarios[i][3])) {
+			else if (!conta.equals(matrizUsuarios[i][4])) {
 				System.out.println("Usuário não encontrado!");
 				break;
 			}
@@ -136,6 +163,38 @@ public class Main {
 		}
 	}
 
+	private static void sacar(int i, String[][] matrizUsuarios) {
+		Scanner ler = new Scanner(System.in);
+		
+		imprimirUsuario(i, matrizUsuarios);
+		
+		System.out.print("Informe o valor para sacar: R$ ");
+		double sacar = ler.nextDouble();
+		
+		if (matrizUsuarios[i][5] != null) {
+			double valor = Double.parseDouble(matrizUsuarios[i][5]);
+			
+			if (sacar <= 0 || sacar > valor) {
+				System.out.println("Saldo indisponivel!");
+			} else {
+				double decrementa = valor - sacar;
+				matrizUsuarios[i][5] = String.valueOf(decrementa);
+				System.out.printf("\nR$ %.2f Sacado da conta %s\n", sacar, matrizUsuarios[i][4]);
+			}
+			
+			
+		}else {
+			matrizUsuarios[i][5] = String.valueOf(sacar);
+		}
+		
+		mostrarSaldo(matrizUsuarios, i);
+		System.out.println("------------------------------------");
+		
+	}
+	private static void mostrarSaldo(String[][] matrizUsuarios, int i) {
+		System.out.println("Saldo atual " + matrizUsuarios[i][5]);
+		
+	}
 	//verifica se a conta existe de acordo se a linha estiver preenchida
 	private static int verificaLinhaSeExiste(String [][]matrizUsuarios) {
 		for (int i = 0; i < matrizUsuarios.length; i++) {//linha
