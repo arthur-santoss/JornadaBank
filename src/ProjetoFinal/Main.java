@@ -211,7 +211,7 @@ public class Main {
 					}
 				}
 				return -1;
-			}
+			}//apagar
 			
 			public static int encontrarPosicaoVazia(String[][] matrizUsuarios) {
 				for (int i = 0; i < matrizUsuarios.length; i++) {
