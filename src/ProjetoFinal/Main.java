@@ -198,10 +198,8 @@ public class Main {
 	
 	public static int encontrarPosicaoVazia(String[][] matrizUsuarios) {
 		for (int i = 0; i < matrizUsuarios.length; i++) {
-			for (int j = 0; j < matrizUsuarios[i].length; j++) {
-				if (matrizUsuarios[i][j] == null) {
-					return i; // Retorna a posição da linha vazia
-				}
+			if (matrizUsuarios[i][0] == null ) {
+				return i; // Retorna a posição da linha vazia
 			}
 		}
 		return -1; // Retorna -1 se não encontrar uma posição vazia na matriz
@@ -227,7 +225,7 @@ public class Main {
 		Scanner ler = new Scanner(System.in);
 		Random random = new Random();
 		
-		String numeroAleatorio = String.valueOf(random.nextInt(0001,5000) ); //gera um numero de 4 dígitos para conta
+		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000) ); //gera um numero de 4 dígitos para conta
 		int posicao = encontrarPosicaoVazia(matrizUsuarios);
 		
 		System.out.println("-----------SEJA BEM VINDO!-----------");
