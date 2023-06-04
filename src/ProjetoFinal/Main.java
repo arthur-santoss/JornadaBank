@@ -94,7 +94,6 @@ public class Main {
 		
 		mostrarSaldo(matrizUsuarios, i);
 		System.out.println("------------------------------------");
-		
 	}
 
 	
