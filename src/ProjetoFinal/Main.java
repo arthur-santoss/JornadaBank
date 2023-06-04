@@ -53,6 +53,8 @@ public class Main {
 		System.out.println("Programa encerrado!");
 		
 	}
+	
+	//-------------------MÉTODOS DE SAQUE-------------------
 	private static void fazerSaque(String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
 		
@@ -64,22 +66,38 @@ public class Main {
 		String senha = ler.nextLine();
 		
 		verificarUsuario(conta, matrizUsuarios, precisaSenha);
-		
-		
-		
 	}
-	//-------------------MÉTODOS DE TRANSFERÊNCIA DE SALDO ENTRE USUÁRIOS-------------------
-//	private static void fazerTransferencia(String[][] matrizUsuarios) {
-//		Scanner ler = new Scanner(System.in);
-//		System.out.println("informe a sua conta:");
-//		String conta = ler.nextLine();
-//		System.out.print("informe a senha da sua conta:");
-//		String senha = ler.nextLine();
-//		
-//		verificarUsuario(conta, matrizUsuarios);
-//		
-//	}
+	
+	private static void sacar(int i, String[][] matrizUsuarios) {
+		Scanner ler = new Scanner(System.in);
+		
+		imprimirUsuario(i, matrizUsuarios);
+		
+		System.out.print("Informe o valor para sacar: R$ ");
+		double sacar = ler.nextDouble();
+		
+		if (matrizUsuarios[i][5] != null) {
+			double valor = Double.parseDouble(matrizUsuarios[i][5]);
+			
+			if (sacar <= 0 || sacar > valor) {
+				System.out.println("Saldo indisponivel!");
+			} else {
+				double decrementa = valor - sacar;
+				matrizUsuarios[i][5] = String.valueOf(decrementa);
+				System.out.printf("\nR$ %.2f Sacado da conta %s\n", sacar, matrizUsuarios[i][4]);
+			}
+			
+			
+		}else {
+			matrizUsuarios[i][5] = String.valueOf(sacar);
+		}
+		
+		mostrarSaldo(matrizUsuarios, i);
+		System.out.println("------------------------------------");
+	}
 
+	
+	
 	//-------------------MÉTODOS DE DEPÓSITO-------------------
 	private static void fazerDeposito(String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
@@ -109,7 +127,6 @@ public class Main {
 		}
 	}
 	
-	//-------------------MÉTODOS AUXÍLIARES DE OUTROS MÉTODOS-------------------
 	private static void depositar(int i, String[][] matrizUsuarios ) {
 		Scanner ler = new Scanner(System.in);
 		
@@ -134,66 +151,36 @@ public class Main {
 		
 		mostrarSaldo(matrizUsuarios, i);
 		System.out.println("------------------------------------");
-		
 	}
-
 	
+	
+	
+	//-------------------MÉTODOS AUXÍLIARES DE OUTROS MÉTODOS-------------------
 	//verifica na matriz se os dados de conta e senha existem e coincidem
 	private static void verificarUsuario(String conta, String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
 		for (int i = 0; i < matrizUsuarios.length; i++) {
-			if (conta.equals(matrizUsuarios[i][4])) {
+			if (!conta.equals(matrizUsuarios[i][4])) {
+				System.out.println("Procurando...");
+			}
+			
+			else if (conta.equals(matrizUsuarios[i][4])) {
 				System.out.println("\nUsuário encontrado!\n");
 				if (precisaSenha == false) {
 					depositar(i, matrizUsuarios);
 				} else if (precisaSenha == true) {
 					sacar(i, matrizUsuarios);
-				}{
-					
 				}
 				break;
 			}
-			else if (!conta.equals(matrizUsuarios[i][4])) {
-				System.out.println("Usuário não encontrado!");
-				break;
-			}
 			else {
-				System.out.println("Procurando...");
+				System.out.println("Usuário não encontrado!");
 			}
 		}
 	}
 
-	private static void sacar(int i, String[][] matrizUsuarios) {
-		Scanner ler = new Scanner(System.in);
-		
-		imprimirUsuario(i, matrizUsuarios);
-		
-		System.out.print("Informe o valor para sacar: R$ ");
-		double sacar = ler.nextDouble();
-		
-		if (matrizUsuarios[i][5] != null) {
-			double valor = Double.parseDouble(matrizUsuarios[i][5]);
-			
-			if (sacar <= 0 || sacar > valor) {
-				System.out.println("Saldo indisponivel!");
-			} else {
-				double decrementa = valor - sacar;
-				matrizUsuarios[i][5] = String.valueOf(decrementa);
-				System.out.printf("\nR$ %.2f Sacado da conta %s\n", sacar, matrizUsuarios[i][4]);
-			}
-			
-			
-		}else {
-			matrizUsuarios[i][5] = String.valueOf(sacar);
-		}
-		
-		mostrarSaldo(matrizUsuarios, i);
-		System.out.println("------------------------------------");
-		
-	}
 	private static void mostrarSaldo(String[][] matrizUsuarios, int i) {
 		System.out.println("Saldo atual " + matrizUsuarios[i][5]);
-		
 	}
 	
 	public static int encontrarPosicaoVazia(String[][] matrizUsuarios) {
@@ -206,21 +193,8 @@ public class Main {
 	}
 
 	
-	//-------------------MÉTODO DE VISUALIZAÇÃO DOS DADOS NA MATRIZ-------------------
-	private static void mostrarContasCadastradas(String[][] matrizUsuarios) {
-		// imprimir matriz
-				System.out.println("\nDados da Matriz:\n"
-						+ "nome / CPF / E-mail / Senha / Conta / Saldo");
-				for (int i = 0; i < matrizUsuarios.length; i++) {
-					for (int j = 0; j < matrizUsuarios[i].length; j++) {
-						System.out.print(matrizUsuarios[i][j] + " | ");
-					}
-					System.out.println();
-				}
-	}
-
-
-	//-------------------MÉTODO DE ADIÇÃO DE NOVO USUÁRIO-------------------
+	
+		//-------------------MÉTODO DE ADIÇÃO DE NOVO USUÁRIO-------------------
 	public static void adicionarUsuario(String[][] matrizUsuarios) {
 		Scanner ler = new Scanner(System.in);
 		Random random = new Random();
@@ -248,23 +222,38 @@ public class Main {
 		imprimirUsuario(posicao, matrizUsuarios);
 		System.out.println("Criado com sucesso!\n"
 				+ "-------------------------");
-		
 	}
 	
 	
-	//pega a posição informada no método adicionarUsuario e imprime o que há lá
-	public static void imprimirUsuario(int posicao, String[][] matrizUsuarios) {
-		System.out.println(
-				"\n-----------usuário-----------\n"+		
-				"nome: " + matrizUsuarios[posicao][0]+ "\n" +
-				"cpf: " + matrizUsuarios[posicao][1]+ "\n" +
-				"email: " + matrizUsuarios[posicao][2]+ "\n" +
-				"senha: " + matrizUsuarios[posicao][3]+ "\n" +
-				"conta: " + matrizUsuarios[posicao][4]+ "\n" +
-				"saldo: " + matrizUsuarios[posicao][5]+ "\n" +
-				"\n------------------------------");
-	}
 
-	
+	//-------------------MÉTODOS DE IMPRIMIR/MOSTRAR DADOS-------------------
+	//pega a posição informada no método adicionarUsuario e imprime o que há lá
+		public static void imprimirUsuario(int posicao, String[][] matrizUsuarios) {
+			System.out.println(
+					"\n-----------usuário-----------\n"+		
+					"nome: " + matrizUsuarios[posicao][0]+ "\n" +
+					"cpf: " + matrizUsuarios[posicao][1]+ "\n" +
+					"email: " + matrizUsuarios[posicao][2]+ "\n" +
+					"senha: " + matrizUsuarios[posicao][3]+ "\n" +
+					"conta: " + matrizUsuarios[posicao][4]+ "\n" +
+					"saldo: " + matrizUsuarios[posicao][5]+ "\n" +
+					"\n------------------------------");
+		}
+		
+		private static void mostrarContasCadastradas(String[][] matrizUsuarios) {
+			// imprimir matriz
+					System.out.println("\nDados da Matriz:\n"
+							+ "nome / CPF / E-mail / Senha / Conta / Saldo");
+					for (int i = 0; i < matrizUsuarios.length; i++) {
+						for (int j = 0; j < matrizUsuarios[i].length; j++) {
+							System.out.print(matrizUsuarios[i][j] + " | ");
+						}
+						System.out.println();
+					}
+		}
+
+
+
+
 
 }
