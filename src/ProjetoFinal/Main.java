@@ -224,7 +224,6 @@ public class Main {
 				+ "-------------------------");
 	}
 	
-	
 
 	//-------------------MÉTODOS DE IMPRIMIR/MOSTRAR DADOS-------------------
 	//pega a posição informada no método adicionarUsuario e imprime o que há lá
