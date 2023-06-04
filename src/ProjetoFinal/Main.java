@@ -181,7 +181,6 @@ public class Main {
 
 	private static void mostrarSaldo(String[][] matrizUsuarios, int i) {
 		System.out.println("Saldo atual " + matrizUsuarios[i][5]);
-		
 	}
 	
 	public static int encontrarPosicaoVazia(String[][] matrizUsuarios) {
