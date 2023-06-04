@@ -222,7 +222,6 @@ public class Main {
 		imprimirUsuario(posicao, matrizUsuarios);
 		System.out.println("Criado com sucesso!\n"
 				+ "-------------------------");
-		
 	}
 	
 	
