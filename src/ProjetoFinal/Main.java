@@ -53,7 +53,92 @@ public class Main {
 		System.out.println("Programa encerrado!");
 		
 	}
+
+	//-------------------MÉTODO DE ADIÇÃO DE NOVO USUÁRIO-------------------
+	public static void adicionarUsuario(String[][] matrizUsuarios) {
+				Scanner ler = new Scanner(System.in);
+				Random random = new Random();
+				
+				String numeroAleatorio = String.valueOf(random.nextInt(1000,5000) ); //gera um numero de 4 dígitos para conta
+				int posicao = encontrarPosicaoVazia(matrizUsuarios);
+				
+				System.out.println("-----------SEJA BEM VINDO!-----------");
+				
+				System.out.print("digite seu nome: ");
+				matrizUsuarios[posicao][0] = ler.next();
+				
+				System.out.print("digite seu cpf: ");
+				matrizUsuarios[posicao][1] = ler.next();
+				
+				System.out.print("digite seu email: ");
+				matrizUsuarios[posicao][2] = ler.next();
+				
+				System.out.print("digite sua senha: ");
+				matrizUsuarios[posicao][3] = ler.next();
+				
+				//adiciona numero da conta
+				matrizUsuarios[posicao][4] = numeroAleatorio;
+				
+				imprimirUsuario(posicao, matrizUsuarios);
+				System.out.println("Criado com sucesso!\n"
+						+ "-------------------------");
+			}
 	
+	//-------------------MÉTODOS DE DEPÓSITO-------------------
+	private static void fazerDeposito(String[][] matrizUsuarios, boolean precisaSenha) {
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.print("-----------FAZER DEPÓSITO-----------\n"
+				+ "1) logar\n"
+				+ "2) Não tenho conta -> criar conta"
+				+ "\n->");
+		int op = ler.nextInt();
+		
+		switch (op) {
+		case 1:
+			ler.nextLine();
+			System.out.print("\n-----------LOGIN-----------"
+					+ "\ninforme a conta para deposito:\n");
+			String conta = ler.nextLine();
+			
+			verificarUsuario(conta, matrizUsuarios, precisaSenha);
+			break;
+			
+		case 2:
+			adicionarUsuario(matrizUsuarios);
+			break;
+			
+		default:
+			break;
+		}
+	}
+
+	private static void depositar(int i, String[][] matrizUsuarios ) {
+		Scanner ler = new Scanner(System.in);
+		
+		imprimirUsuario(i, matrizUsuarios);
+		
+		System.out.print("Informe o valor para deposito: R$ ");
+		double deposito = ler.nextDouble();
+		
+		if (deposito < 0) {
+			System.out.println("Valor inválido!");
+		} else {
+			if (matrizUsuarios[i][5] != null) {
+				double valor = Double.parseDouble(matrizUsuarios[i][5]);
+				double incrementarValor = valor + deposito;
+				matrizUsuarios[i][5] = String.valueOf(incrementarValor);
+				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
+			}else {
+				matrizUsuarios[i][5] = String.valueOf(deposito);
+				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
+			}
+		}
+		
+		mostrarSaldo(matrizUsuarios, i);
+		System.out.println("------------------------------------");
+	}
+
 	//-------------------MÉTODOS DE SAQUE-------------------
 	private static void fazerSaque(String[][] matrizUsuarios, boolean precisaSenha) {
 		Scanner ler = new Scanner(System.in);
@@ -95,65 +180,19 @@ public class Main {
 		mostrarSaldo(matrizUsuarios, i);
 		System.out.println("------------------------------------");
 	}
-
 	
-	
-	//-------------------MÉTODOS DE DEPÓSITO-------------------
-	private static void fazerDeposito(String[][] matrizUsuarios, boolean precisaSenha) {
-		Scanner ler = new Scanner(System.in);
-		
-		System.out.print("-----------FAZER DEPÓSITO-----------\n"
-				+ "1) logar\n"
-				+ "2) Não tenho conta -> criar conta"
-				+ "\n->");
-		int op = ler.nextInt();
-		
-		switch (op) {
-		case 1:
-			ler.nextLine();
-			System.out.print("\n-----------LOGIN-----------"
-					+ "\ninforme a conta para deposito:\n");
-			String conta = ler.nextLine();
-			
-			verificarUsuario(conta, matrizUsuarios, precisaSenha);
-			break;
-			
-		case 2:
-			adicionarUsuario(matrizUsuarios);
-			break;
-			
-		default:
-			break;
-		}
+//-------------------MÉTODO DE MOSTRAR CONTAS CADASTRADAS-------------------
+	private static void mostrarContasCadastradas(String[][] matrizUsuarios) {
+		// imprimir matriz
+				System.out.println("\nDados da Matriz:\n"
+						+ "nome / CPF / E-mail / Senha / Conta / Saldo");
+				for (int i = 0; i < matrizUsuarios.length; i++) {
+					for (int j = 0; j < matrizUsuarios[i].length; j++) {
+						System.out.print(matrizUsuarios[i][j] + " | ");
+					}
+					System.out.println();
+				}
 	}
-	
-	private static void depositar(int i, String[][] matrizUsuarios ) {
-		Scanner ler = new Scanner(System.in);
-		
-		imprimirUsuario(i, matrizUsuarios);
-		
-		System.out.print("Informe o valor para deposito: R$ ");
-		double deposito = ler.nextDouble();
-		
-		if (deposito < 0) {
-			System.out.println("Valor inválido!");
-		} else {
-			if (matrizUsuarios[i][5] != null) {
-				double valor = Double.parseDouble(matrizUsuarios[i][5]);
-				double incrementarValor = valor + deposito;
-				matrizUsuarios[i][5] = String.valueOf(incrementarValor);
-				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
-			}else {
-				matrizUsuarios[i][5] = String.valueOf(deposito);
-				System.out.printf("\nR$ %.2f Adicionado a conta %s\n", deposito, matrizUsuarios[i][4]);
-			}
-		}
-		
-		mostrarSaldo(matrizUsuarios, i);
-		System.out.println("------------------------------------");
-	}
-	
-	
 	
 	//-------------------MÉTODOS AUXÍLIARES DE OUTROS MÉTODOS-------------------
 	//verifica na matriz se os dados de conta e senha existem e coincidem
@@ -192,40 +231,6 @@ public class Main {
 		return -1; // Retorna -1 se não encontrar uma posição vazia na matriz
 	}
 
-	
-	
-		//-------------------MÉTODO DE ADIÇÃO DE NOVO USUÁRIO-------------------
-	public static void adicionarUsuario(String[][] matrizUsuarios) {
-		Scanner ler = new Scanner(System.in);
-		Random random = new Random();
-		
-		String numeroAleatorio = String.valueOf(random.nextInt(1000,5000) ); //gera um numero de 4 dígitos para conta
-		int posicao = encontrarPosicaoVazia(matrizUsuarios);
-		
-		System.out.println("-----------SEJA BEM VINDO!-----------");
-		
-		System.out.print("digite seu nome: ");
-		matrizUsuarios[posicao][0] = ler.next();
-		
-		System.out.print("digite seu cpf: ");
-		matrizUsuarios[posicao][1] = ler.next();
-		
-		System.out.print("digite seu email: ");
-		matrizUsuarios[posicao][2] = ler.next();
-		
-		System.out.print("digite sua senha: ");
-		matrizUsuarios[posicao][3] = ler.next();
-		
-		//adiciona numero da conta
-		matrizUsuarios[posicao][4] = numeroAleatorio;
-		
-		imprimirUsuario(posicao, matrizUsuarios);
-		System.out.println("Criado com sucesso!\n"
-				+ "-------------------------");
-	}
-	
-	
-
 	//-------------------MÉTODOS DE IMPRIMIR/MOSTRAR DADOS-------------------
 	//pega a posição informada no método adicionarUsuario e imprime o que há lá
 		public static void imprimirUsuario(int posicao, String[][] matrizUsuarios) {
@@ -239,21 +244,5 @@ public class Main {
 					"saldo: " + matrizUsuarios[posicao][5]+ "\n" +
 					"\n------------------------------");
 		}
-		
-		private static void mostrarContasCadastradas(String[][] matrizUsuarios) {
-			// imprimir matriz
-					System.out.println("\nDados da Matriz:\n"
-							+ "nome / CPF / E-mail / Senha / Conta / Saldo");
-					for (int i = 0; i < matrizUsuarios.length; i++) {
-						for (int j = 0; j < matrizUsuarios[i].length; j++) {
-							System.out.print(matrizUsuarios[i][j] + " | ");
-						}
-						System.out.println();
-					}
-		}
-
-
-
-
 
 }
