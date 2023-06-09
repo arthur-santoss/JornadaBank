@@ -58,7 +58,6 @@ public class Main {
 
 		} while (opcao != 0);
 		System.out.println("Programa encerrado!");
-
 	}
 
 	// -------------------MÉTODO DE ADIÇÃO DE NOVO USUÁRIO-------------------
@@ -243,7 +242,6 @@ public class Main {
 
 			}
 		}
-
 	}
 
 //-------------------MÉTODO DE MOSTRAR CONTAS CADASTRADAS-------------------
@@ -259,6 +257,7 @@ public class Main {
 		}
 	}
 
+
 	// -------------------MÉTODOS AUXÍLIARES DE OUTROS MÉTODOS-------------------
 	private static boolean validarUsuario(String[][] matrizUsuarios, String conta, String senha) {
 		boolean res = false;
@@ -269,7 +268,6 @@ public class Main {
 				i = matrizUsuarios.length;
 			}
 		}
-			
 		return res;
 	}
 	
