@@ -29,10 +29,31 @@ que o usuário poderá escolher, dentre elas:
   <h1> Fazer depósito </H1>
   Para ser feito o depósito, será perguntado ao usuário se ele já tem conta, senão, irá direcionar para o método anterior de criar conta. Após essa verificação será utilizado um método auxiliar para percorrer a matriz e encontrar a conta correspondente que quando encontrado irá retornar "usuário encontrado" e um valor como indice para ser inserido
   o valor desejado, caso durante esse looping não seja encontrado irá retornar "procurando...", e caso não exista a conta informada dentro da matriz irá retornar "Usuário não encontrado".
+  Após isso, irá ser perguntado o valor a depositar e ele será incrementado no seu índice.
 </p>
 
 <div>
   <img src="img/2_fazer_deposito.png" />
 </div>
+
+<p>
+  <h1> Fazer saque </H1>
+  Quando o usuário desejar fazer um saque, novamente ira ser verificado se aquela conta existe E agora também irá ter uma validação de conta e senha correspondentes para ele acessar a conta se for dele mesmo. Após isso irá ser perguntado o valor a ser sacado e será decrementado em seu índice.
+</p>
+
+<div>
+  <img src="img/3_fazer_saque.png" />
+</div>
+
+<p>
+  <h1> Fazer Transferência </H1>
+  Quando o usuário desejar fazer um saque, novamente ira ser verificado se aquela conta existe E agora também irá ter uma validação de conta e senha correspondentes para ele acessar a conta se for dele mesmo. Após isso irá ser perguntado o valor a ser sacado e será decrementado em seu índice.
+</p>
+
+<div>
+  <img src="img/3_fazer_saque.png" />
+</div>
+
+
 
 
