@@ -1,4 +1,4 @@
-# JornadaBank
+# 👨🏻‍💻 JornadaBank
 <p>
   Olá, aqui será explicado o funcionamento de todo o projeto Jornada Bank inteiramente desenvolvido somente com paradigma procedural em Java, 
 seu armazenamento de dados somente em matrizes, aplicação de CRUD e métodos! 
