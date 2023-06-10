@@ -73,7 +73,7 @@ que o usuário poderá escolher, dentre elas:
 </div>
 
 <h1>🥳 OBRIGADO! 🥳</h1>
-Desenvolvido por:
+Desenvolvido por: <br>
 🔰 Arthur dos Santos <br>
 🔰 Matheus Cruz <br>
 🔰 Gabriel Moura <br>
