@@ -47,11 +47,11 @@ que o usuário poderá escolher, dentre elas:
 
 <p>
   <h1> Fazer Transferência </H1>
-  Quando o usuário desejar fazer um saque, novamente ira ser verificado se aquela conta existe E agora também irá ter uma validação de conta e senha correspondentes para ele acessar a conta se for dele mesmo. Após isso irá ser perguntado o valor a ser sacado e será decrementado em seu índice.
+  Novamente será perguntado conta e senha do usuário para caírem em uma validação, após ela ser verdadeira, será perguntado o número da conta de destino e o valor da transferência para transferir. Onde a conta logada pelo usuário será decrementado o valor de transferência e na conta de destino será incrementado este mesmo valor, retornando na tela seu valor de transferência e conta de destino.
 </p>
 
 <div>
-  <img src="img/3_fazer_saque.png" />
+  <img src="img/4_fazer_transferencia.png" />
 </div>
 
 
