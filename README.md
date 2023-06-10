@@ -24,3 +24,15 @@ que o usuário poderá escolher, dentre elas:
 <div>
   <img src="img/1_opção_criar_usuário.png" />
 </div>
+
+<p>
+  <h1> Fazer depósito </H1>
+  Para ser feito o depósito, será perguntado ao usuário se ele já tem conta, senão, irá direcionar para o método anterior de criar conta. Após essa verificação será utilizado um método auxiliar para percorrer a matriz e encontrar a conta correspondente que quando encontrado irá retornar "usuário encontrado" e um valor como indice para ser inserido
+  o valor desejado, caso durante esse looping não seja encontrado irá retornar "procurando...", e caso não exista a conta informada dentro da matriz irá retornar "Usuário não encontrado".
+</p>
+
+<div>
+  <img src="img/2_fazer_deposito.png" />
+</div>
+
+
